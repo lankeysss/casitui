@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>工艺设计</title>    
+    <!--   CSS     -->
+    <link href="../../base/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../base/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="../../base/css/animate.css" rel="stylesheet">
+    <link href="../../base/css/style.css?v=4.1.0" rel="stylesheet"> 
+	<link href="../../base/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+	<!--   引用js     -->
+    <script src="../../base/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../base/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../base/plugins/zrender/sea.js"></script>     
+    <style> 
+		.top-buttons{
+			margin-right: 10px;
+			padding: 5px 12px;
+			margin-bottom: 5px;
+			margin-top: -10px;
+		}
+		.btn-w1{
+			width:60px;
+		}
+		.btn-w2{
+			width:80px;
+		}
+		.h6-title{
+			padding-left: 10px;
+		}
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+	<div class="row">
+		<!--   主界面-流程图     -->
+		<div class="col-sm-8">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>流程图配置</h5> 
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
+					</div>
+					<div  style="float: right;">
+						<a type="button" id="zc3" class="btn btn-danger top-buttons btn-w1" data-toggle="modal">删除</a>
+						<a type="button" id="zc4" class="btn btn-warning top-buttons btn-w1" data-toggle="modal">保存</a> 
+						<a type="button" id="zc5" class="btn btn-primary top-buttons btn-w1" data-toggle="modal">导出</a>  
+						<a type="button" id="zc6" class="btn btn-info top-buttons btn-w1" data-toggle="modal" data-target="#myModal4">导入</a>
+						<a type="button" id="zc7" class="btn btn-danger top-buttons btn-w2"  data-toggle="modal" data-target="#myModal5">新建流程</a>
+						<a type="button" id="zc8" class="btn btn-warning top-buttons btn-w2" data-toggle="modal" data-target="#myModal6">新建案例</a> 
+					</div>
+				</div> 
+				<div class="ibox-content" style="overflow: auto; height: 490px;">
+					<div id="mainz1" style="height:600px; ">
+					  	<div style=" text-align: center; margin-top: 200px; font-family: 黑体 "><h1 class="no-margins">数据载入中....</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--   流程组件     -->
+		<div class="col-sm-4" style="max-width: 360px;"  >
+			<div class="ibox float-e-margins">
+				<div class="ibox-title"> 
+					<h5>新增组件</h5>
+						<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
+					</div>
+				</div>
+				<div class="ibox-content" style="overflow: auto; height: 490px;">
+					<h5>连线组件</h5>
+					<a type="button" id="add1" style="" class="btn btn-primary ">连线</a>  
+					<a type="button" id="add2" style="" class="btn btn-info ">箭头连线</a>
+					<a type="button" id="add3" style="" class="btn btn-danger ">虚线连线</a>
+					<h5>工具组件</h5>
+					<a type="button" id="add4" style="" class="btn btn-warning "  data-toggle="modal">备注</a>  
+					<a type="button" id="add5" style="padding: 6px 19px;" class="btn btn-primary ">点</a> 
+					<h5>工艺结构</h5> 
+					<h5 style="padding-left: 5px;">1 制丝生产线</h5> 
+					<h6 class="h6-title">1.1 烟片处理</h6>
+					<a type="button" id="add11" data-print="1" style="margin-left: 20px;" class="btn btn-primary ">备料</a>
+					<a type="button" id="add12" data-print="1" style="" class="btn btn-primary ">真空回潮</a>
+					<a type="button" id="add13" data-print="1" style="" class="btn btn-primary ">松散回潮</a>
+					<a type="button" id="add14" data-print="1" style="margin-left: 20px;" class="btn btn-primary ">开箱</a>
+					<a type="button" id="add15" data-print="1" style="" class="btn btn-primary ">异物剔除</a>
+					<a type="button" id="add16" data-print="1" style="" class="btn btn-primary ">烟片预配</a>
+					<a type="button" id="add17" data-print="1" style="margin-left: 20px;" class="btn btn-primary ">分片</a>
+					<a type="button" id="add18" data-print="1" style="padding: 6px 5px;" class="btn btn-primary ">筛分和加料</a>
+					<a type="button" id="add19" data-print="1" style="" class="btn btn-primary ">配叶贮叶</a>
+					<a type="button" id="add20" data-print="1" style="margin-left: 20px;padding: 6px 9px;" class="btn btn-primary ">叶片增温和加料</a>
+					<a type="button" id="add21" data-print="1" style="padding: 6px 9px;" class="btn btn-primary ">烤烟松散回潮</a>
+					<h6 class="h6-title">1.2 制叶丝</h6>
+					<a type="button" id="add22" data-print="2" style="margin-left: 20px;padding: 6px 8px;" class="btn btn-info ">切叶丝</a>
+					<a type="button" id="add23" data-print="2" style="padding: 6px 10px;" class="btn btn-info ">烟片增温</a>
+					<a type="button" id="add24" data-print="2" style="padding: 6px 10px;" class="btn btn-info ">叶丝干燥</a>
+					<a type="button" id="add25" data-print="2" style="margin-left: 20px;" class="btn btn-info ">叶丝风选</a>
+					<a type="button" id="add26" data-print="2" style="" class="btn btn-info ">叶丝增温增湿</a>
+					<h6 class="h6-title">1.3 掺配加香</h6>
+					<a type="button" id="add27" data-print="3" style="margin-left: 20px;" class="btn btn-danger ">贮丝</a>
+					<a type="button" id="add28" data-print="3" style="" class="btn btn-danger ">叶丝暂存</a>
+					<a type="button" id="add29" data-print="3" style="" class="btn btn-danger ">比例掺配</a>
+					<a type="button" id="add30" data-print="3" style="margin-left: 20px;" class="btn btn-danger ">烟丝加香</a>
+					<h6 class="h6-title">1.4 白肋烟处理</h6>
+					<a type="button" id="add31" data-print="4" style="margin-left: 20px;" class="btn btn-warning ">烘培</a> 
+					<a type="button" id="add32" data-print="4" style="" class="btn btn-warning ">一次贮叶</a>  
+					<a type="button" id="add33" data-print="4" style="" class="btn btn-warning ">二次贮叶</a> 
+					<a type="button" id="add34" data-print="4" style="margin-left: 20px;" class="btn btn-warning ">一次增温增湿</a>  
+					<a type="button" id="add35" data-print="4" style="padding: 6px 13px;" class="btn btn-warning ">二次增温增湿</a>
+					<a type="button" id="add36" data-print="4" style="margin-left: 20px;" class="btn btn-warning ">白肋烟松散回潮</a> 
+					<a type="button" id="add37" data-print="4" style="padding: 6px 13px;" class="btn btn-warning ">一次加里料</a> 
+					<a type="button" id="add38" data-print="4" style="margin-left: 20px;padding: 6px 8px;" class="btn btn-warning ">加里料</a> 
+					<a type="button" id="add39" data-print="4" style="padding: 6px 8px;" class="btn btn-warning ">加表料</a> 
+					<a type="button" id="add40" data-print="4" style="padding: 6px 13px;" class="btn btn-warning ">二次加里料</a> 
+				</div>
+			</div>
+		</div>
+		<!--   end     -->
+	</div>
+
+	<!--   删除     -->
+	<div class="modal inmodal fade" id="myModal1" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">确认删除</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="delmodal"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="delsure">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<!--   保存     -->
+	<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">保存成功</h4>
+                </div>
+                <div class="modal-body">
+                    <p>流程保存成功</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" id="savesure">确认</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--   导出     -->
+	<div class="modal inmodal fade" id="myModal3" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">导出流程数据</h4>
+					<small class="font-bold">流程的数据是使用JSON格式</small>
+				</div>
+				<div class="modal-body">
+					<textarea id="textarea1" name="comment1" class="form-control" required="" aria-required="true" style="height: 200px;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--   导入     -->	
+	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">导入流程数据</h4>
+					<small class="font-bold">流程的数据是使用JSON格式</small>
+				</div>
+				<div class="modal-body">
+					<textarea id="textarea2" name="comment2" class="form-control" required="" aria-required="true" style="height: 200px;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="zf46">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--   新建流程     -->
+	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新建流程</h4>
+                </div>
+                <div class="modal-body">
+                    <p>新建一个空白的流程工程，可以在内部添加和配置流程结点，并可以保存。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="zf47">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--   新建案例     -->
+	<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新建案例流程</h4>
+                </div>
+                <div class="modal-body">
+                    <p>新建一个配置好的流程工程，主要用于快速演示和展示，可以在内部添加和配置流程结点，并可以保存。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="zf48">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--   备注     -->	
+	<div class="modal inmodal fade" id="myModal7" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg" style="width: 300px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h5 class="font-bold">请输入备注名</h5>
+				</div>
+				<div class="modal-body">
+					<textarea id="textarea3" name="comment2" class="form-control" required="" aria-required="true" style="height: 50px;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="memosure">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!--   end     -->
+</div>
+<!--   引用js     -->
+    <script src="../../base/js/content.js?v=1.0.0" type="text/javascript" ></script>
+	<script src="../../base/js/plugins/toastr/toastr.min.js" type="text/javascript" ></script>	
+<!--   JavaScript部分     -->
+<script type="text/javascript">
+    
+var zr;
+var optsnull;
+var optstp;
+
+toastr.options = {
+	"closeButton": true,
+	"debug": false,
+	"progressBar": true,
+	"positionClass": "toast-top-right",
+	"onclick": null,
+	"showDuration": "400",
+	"hideDuration": "1000",
+	"timeOut": "7000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+};
+seajs.use(['esl.js'],function(yk,tpl,fc){
+	seajs.use(['zr.js'],function(yk,tpl,fc){
+		require.config({
+			packages: [
+				{
+					name: 'zrender',
+					location: '../../base/plugins/zrender/src',
+					main: 'zrender'
+				}
+			]
+		});		
+
+		require(['zrender'],function(ec){
+			zrender = require('zrender');
+			//删除	
+			$('#zc3').on('click',function(){  
+				pzrender.fucstate="del";
+				toastr.info("提示","请选择要处理的单位！");
+			});
+			//保存
+			$('#zc4').on('click',function(){
+				var tp = JSON.stringify(pzrender.getnowopt());
+				tp = tp.replace(new RegExp('},{','g'),'},\n{');
+				localStorage.setItem('zrconf2',tp); 
+				pzrender.init(zr);
+				pzrender.showCL( JSON.parse(tp),zr); 
+				zr.render();
+				toastr.success("提示","保存成功！");
+			});
+			//导出
+			$('#zc5').on('click',function(){
+				$("#myModal3").modal('show');
+				var tp = JSON.stringify(pzrender.getnowopt());
+				tp = tp.replace(new RegExp('},{','g'),'},\n{');
+				setTimeout(function(){$('#textarea1').val(tp); },100); 
+			});
+			//导入
+			$('#zf46').on('click',function(){
+				$("#myModal4").modal('hide');
+				var str = $('#textarea2').val();
+				str = str.replace(new RegExp('\n','g'),'');
+				pzrender.init(zr);
+				pzrender.showCL( JSON.parse(str),zr); 
+				zr.render();
+			});
+			//新建流程
+			$('#zf47').on('click',function(){
+				$("#myModal5").modal('hide');
+				pzrender.init(zr);
+				pzrender.showCL(optsnull, zr); 
+				zr.render();
+			});
+			//新建案例流程
+			$('#zf48').on('click',function(){
+				$("#myModal6").modal('hide');
+				pzrender.init(zr);
+				pzrender.showCL(optstp, zr); 
+				zr.render();
+			});
+			
+			//连线组件
+			$('#add1').on('click',function(){   //连线
+				pzrender.fucstate="addline";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			$('#add2').on('click',function(){   //箭头连线
+				pzrender.fucstate="addarrow";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			$('#add3').on('click',function(){   //虚线连线
+				pzrender.fucstate="addlineB";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			//工具组件
+			$('#add4').on('click',function(){   //备注
+				$("#myModal7").modal('show');
+				$("#memosure").on('click',function(){
+					var str = $('#textarea3').val();
+					if(str != "" && str != null){
+						pzrender.addtext(str,zr);
+					}else{
+						pzrender.addtext("备注",zr);
+					}
+					$("#myModal7").modal('hide');					
+				});
+				  
+			});  
+			$('#add5').on('click',function(){   pzrender.addpoint(zr); 	});   //点
+			//工艺结构
+			for(var i=11; i<=40; i++){
+				$('#add'+i).on('click',function(){  
+					var parent = $(this).attr("data-print");
+					var name = $(this).html();
+					pzrender.addcraft(parent,name,zr); 
+				}); 
+			}
+			
+			optsnull={"nodes":[],"index":50};
+			optstp= {"nodes":[{"type":"ptext","x":270,"y":10,"text":"工艺设计","width":100,"id":"st1","height":40},
+				{"type":"pcraft","x":13,"y":96,"text":"备料","width":90,"id":"t1","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":147,"y":98,"text":"开箱","width":90,"id":"t2","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":144,"y":155,"text":"分片","width":90,"id":"t3","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":287,"y":101,"text":"真空回潮","width":90,"id":"t4","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":421,"y":101,"text":"叶片增温和加料","width":90,"id":"t5","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":559,"y":100,"text":"烤烟松散回潮","width":90,"id":"t6","strokeColor":"#3EA86B","height":40},
+				{"type":"pcraft","x":421,"y":256,"text":"叶丝风选","width":90,"id":"t7","strokeColor":"#00645C","height":40},
+				{"type":"pcraft","x":561,"y":258,"text":"叶丝增温增湿","width":90,"id":"t8","strokeColor":"#00645C","height":40},
+				{"type":"pcraft","x":142,"y":255,"text":"二次增温增湿","width":90,"id":"t9","strokeColor":"#00662A","height":40},
+				{"type":"pcraft","x":285,"y":256,"text":"一次增温增湿","width":90,"id":"t10","strokeColor":"#00662A","height":40},
+				{"type":"pcraft","x":11,"y":255,"text":"二次贮叶","width":90,"id":"t11","strokeColor":"#00662A","height":40},
+				{"type":"pcraft","x":152,"y":379,"text":"烘培","width":90,"id":"t12","strokeColor":"#00662A","height":40},
+				{"type":"pcraft","x":13,"y":377,"text":"二次加里料","width":90,"id":"t13","strokeColor":"#00662A","height":40},
+				{"type":"parrow","begin":"t1","end":"t2","id":"t14","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t2","end":"t4","id":"t15","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t1","end":"t3","id":"t16","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t5","end":"t5","id":"t17","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t3","end":"t4","id":"t18","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t4","end":"t5","id":"t19","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t5","end":"t6","id":"t20","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t6","end":"t8","id":"t21","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t8","end":"t7","id":"t22","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t10","end":"t9","id":"t23","jiantou":"18","jiankuan":"8"},
+				{"type":"pline","begin":"t9","end":"t11","id":"t24"},
+				{"type":"parrow","begin":"t11","end":"t13","id":"t25","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t13","end":"t12","id":"t26","jiantou":"18","jiankuan":"8"},
+				{"type":"parrow","begin":"t7","end":"t10","id":"t27","jiantou":"18","jiankuan":"8"}],"index":28}  ;
+			
+			var opts = optstp;
+			if(localStorage.getItem('zrconf2')!=null){ 
+				opts = JSON.parse(localStorage.getItem('zrconf2') ); 
+			}
+			zr = zrender.init(document.getElementById('mainz1'));
+			//zr.clear();  
+			pzrender.init(zr);
+			//产品设计管理
+			pzrender.showCL(opts, zr); 
+			zr.render();
+     		
+		});	
+	});
+});    		
+ 		
+</script>
+</body>
+</html>

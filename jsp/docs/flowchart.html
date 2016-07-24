@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title></title>    
+    
+    <link href="../../base/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../base/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="../../base/css/animate.css" rel="stylesheet">
+    <link href="../../base/css/style.css?v=4.1.0" rel="stylesheet">  
+    <script src="../../base/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../base/js/bootstrap.min.js?v=3.3.6"></script>
+    
+ 
+    <script src="../../base/plugins/flowchart/release/raphael-min.js"></script>
+    <script src="../../base/plugins/flowchart/release/flowchart.js"></script>
+    
+    
+    <style>  
+    	</style>
+    <script type="text/javascript">
+      
+       $(document).ready(function() {
+            $.ajax({
+                url : "../../base/plugins/flowchart/example/test.txt",
+                dataType : "text",
+                success : function(data) {
+                    var chart = flowchart.parse(data);
+                    chart.drawSVG('canvas');
+                }
+            });
+        });
+      
+    </script> 
+</head>
+<body  class="gray-bg" >
+<div class="wrapper wrapper-content">
+<div class="col-sm-9">
+      <div class="ibox float-e-margins">
+          <div class="ibox-title">
+              <h5>流程图</h5>
+              <div class="ibox-tools">
+                  <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a class="close-link">
+                      <i class="fa fa-times"></i>
+                  </a>
+              </div>
+          </div> 
+          <div class="ibox-content" style=" ">
+          	<table width="100%">
+          	<tr> 
+          		<td>
+          			<div class="container" style=" ">
+          				<div id="scrollDiv" style="overflow: auto;height: 300px; width:850px;">
+										<div id="canvas"  style="">
+										</div>
+								</div>
+							</div>
+							</td>
+          	</tr>
+          	</table>
+             
+							  
+          </div>
+      </div>
+  </div>
+	<div class="col-sm-3">
+	    <div class="ibox float-e-margins">
+	        <div class="ibox-title"> 
+	            <h5>介绍</h5>
+	             <div class="ibox-tools">
+                  <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                  </a>
+                  <a class="close-link">
+                      <i class="fa fa-times"></i>
+                  </a>
+              </div>
+	        </div>
+	        <div class="ibox-content" id="youbox" style="overflow: auto;"> 
+	            <h3 class=" "  style="text-align: left">
+	            	<p>&nbsp;&nbsp;&nbsp;&nbsp; 流程图可实现自适应绘图。即：只需定义流程的结构，图形的编排由系统自动完成。
+	            </p>
+	            </h3>
+	           <div id="totalSeat"  style="  word-break: break-all; text-align: left "></div>
+	        </div>
+	    </div>
+	</div>
+
+ <div id="mydiv1" style="position:absolute;display:none;border:1px solid silver;background:rgb(255, 255, 255);padding: 2px;"></div>
+</div>
+	
+    <script src="../../base/js/content.js?v=1.0.0"></script>
+     
+ 	<script>
+	 
+  
+  function rs(){
+     		$('body').width();  
+     	 $('#legendout').height($('body').height()-130);  
+     	 $('#scrollDiv').height($('body').height()-130);
+     	 $('#scrollDiv').width($('.ibox-content').width()-125);
+     	 $('#youbox').height($('body').height()-130);
+     };
+  
+  $(window).resize(function(e){
+rs();
+});
+  
+  rs();
+  
+  
+   
+     </script>
+</html>

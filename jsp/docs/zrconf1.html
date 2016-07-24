@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>流程配置</title>    
+    <!--   CSS     -->
+    <link href="../../base/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../base/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="../../base/css/animate.css" rel="stylesheet">
+    <link href="../../base/css/style.css?v=4.1.0" rel="stylesheet"> 
+	<link href="../../base/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+	<!--   引用js     -->
+    <script src="../../base/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../base/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../base/plugins/zrender/sea.js"></script>     
+    <style> 
+		.top-buttons{
+			margin-right: 10px;
+			padding: 5px 12px;
+			margin-bottom: 5px;
+			margin-top: -10px;
+		}
+		.btn-w1{
+			width:60px;
+		}
+		.btn-w2{
+			width:80px;
+		}
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+	<div class="row">
+		<!--   主界面-流程图     -->
+		<div class="col-sm-9">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>流程图配置</h5> 
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
+					</div>
+					<div  style="float: right;">
+						<a type="button" id="zc3" class="btn btn-danger top-buttons btn-w1" data-toggle="modal">删除</a>
+						<a type="button" id="zc4" class="btn btn-warning top-buttons btn-w1" data-toggle="modal">保存</a> 
+						<a type="button" id="zc5" class="btn btn-primary top-buttons btn-w1" data-toggle="modal">导出</a>  
+						<a type="button" id="zc6" class="btn btn-info top-buttons btn-w1" data-toggle="modal" data-target="#myModal4">导入</a>
+						<a type="button" id="zc7" class="btn btn-danger top-buttons btn-w2"  data-toggle="modal" data-target="#myModal5">新建流程</a>
+						<a type="button" id="zc8" class="btn btn-warning top-buttons btn-w2" data-toggle="modal" data-target="#myModal6">新建案例</a> 
+					</div>
+				</div> 
+				<div class="ibox-content" style="overflow: auto; height: 535px;">
+					<div id="mainz1" style="height:600px; ">
+					  	<div style=" text-align: center; margin-top: 200px; font-family: 黑体 "><h1 class="no-margins">数据载入中....</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--   属性编辑     -->
+		<div class="col-sm-3" style=" max-width: 300px;">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title"> 
+					<h5>属性编辑</h5>
+						<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
+					</div>
+				</div>
+				<div class="ibox-content" style="padding: 5px 20px 2px 20px;">
+					<form class="form-horizontal"> 
+						<div class="form-group">
+							<label class="col-sm-3 control-label" style="padding-left: 0px;padding-right: 3px;">ID：</label> 
+							<div class="col-sm-8">
+								<input type="text" id="nodeid" class="form-control" readonly><span class="help-block m-b-none"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" style="padding-left: 0px;padding-right: 3px;">宽度：</label> 
+							<div class="col-sm-8">
+								<input type="text" id="nodewidth" class="form-control"><span class="help-block m-b-none"> </span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" style="padding-left: 0px;padding-right: 3px;">内容：</label> 
+							<div class="col-sm-8">
+								<textarea id="ccomment" name="comment" class="form-control" required="" aria-required="true"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--   流程组件     -->
+		<div class="col-sm-3" style=" max-width: 300px;">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title"> 
+					<h5>新增组件</h5>
+						<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
+					</div>
+				</div>
+				<div class="ibox-content">
+					<h5>连线组件</h5>
+					<a type="button" id="add1" style="" class="btn btn-primary ">连线</a>  
+					<a type="button" id="add2" style="" class="btn btn-info ">箭头连线</a>
+					<a type="button" id="add3" style="" class="btn btn-danger ">虚线连线</a>
+					<h5>工具组件</h5>
+					<a type="button" id="add4" style="" class="btn btn-warning ">备注</a>  
+					<a type="button" id="add5" style="padding: 6px 19px;" class="btn btn-primary ">点</a> 
+					<h5>流程组件</h5> 
+					<a type="button" id="add6" style="" class="btn btn-info ">开始</a>
+					<a type="button" id="add7" style="" class="btn btn-danger ">结束</a>
+					<a type="button" id="add8" style="" class="btn btn-warning ">任务</a>  
+					<a type="button" id="add9" style="padding: 5px;" class="btn btn-warning ">子任务</a>  
+					<a type="button" id="add10" style="" class="btn btn-primary ">文档</a>  
+					<a type="button" id="add11" style="" class="btn btn-info ">分支</a>
+					<a type="button" id="add12" style="" class="btn btn-danger ">挂起</a>
+					<a type="button" id="add13" style="" class="btn btn-warning ">异常</a>  					
+				</div>
+			</div>
+		</div>
+		<!--   end     -->
+	</div>
+
+	<!--   删除     -->
+	<div class="modal inmodal fade" id="myModal1" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">确认删除</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="delmodal"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="delsure">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>	
+	<!--   保存     -->
+	<div class="modal inmodal fade" id="myModal2" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">保存成功</h4>
+                </div>
+                <div class="modal-body">
+                    <p>流程保存成功</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" id="savesure">确认</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--   导出     -->
+	<div class="modal inmodal fade" id="myModal3" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">导出流程数据</h4>
+					<small class="font-bold">流程的数据是使用JSON格式</small>
+				</div>
+				<div class="modal-body">
+					<textarea id="textarea1" name="comment1" class="form-control" required="" aria-required="true" style="height: 200px;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--   导入     -->	
+	<div class="modal inmodal fade" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">导入流程数据</h4>
+					<small class="font-bold">流程的数据是使用JSON格式</small>
+				</div>
+				<div class="modal-body">
+					<textarea id="textarea2" name="comment2" class="form-control" required="" aria-required="true" style="height: 200px;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="zf46">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--   新建流程     -->
+	<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新建流程</h4>
+                </div>
+                <div class="modal-body">
+                    <p>新建一个空白的流程工程，可以在内部添加和配置流程结点，并可以保存。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="zf47">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!--   新建案例     -->
+	<div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">新建案例流程</h4>
+                </div>
+                <div class="modal-body">
+                    <p>新建一个配置好的流程工程，主要用于快速演示和展示，可以在内部添加和配置流程结点，并可以保存。</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="zf48">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   end     -->
+</div>
+<!--   引用js     -->
+    <script src="../../base/js/content.js?v=1.0.0" type="text/javascript" ></script>
+	<script src="../../base/js/plugins/toastr/toastr.min.js" type="text/javascript" ></script>	
+<!--   JavaScript部分     -->
+<script type="text/javascript">
+    
+var zr;
+var optsnull;
+var optstp;
+
+toastr.options = {
+	"closeButton": true,
+	"debug": false,
+	"progressBar": true,
+	"positionClass": "toast-top-right",
+	"onclick": null,
+	"showDuration": "400",
+	"hideDuration": "1000",
+	"timeOut": "7000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+};
+seajs.use(['esl.js'],function(yk,tpl,fc){
+	seajs.use(['zr.js'],function(yk,tpl,fc){
+		require.config({
+			packages: [
+				{
+					name: 'zrender',
+					location: '../../base/plugins/zrender/src',
+					main: 'zrender'
+				}
+			]
+		});		
+
+		require(['zrender'],function(ec){
+			zrender = require('zrender');
+			//删除	
+			$('#zc3').on('click',function(){  
+				pzrender.fucstate="del";
+				toastr.info("提示","请选择要处理的单位！");
+			});
+			//保存
+			$('#zc4').on('click',function(){
+				var tp = JSON.stringify(pzrender.getnowopt());
+				var nodeid = $('#nodeid').val();
+				if(nodeid != "" && nodeid != null){
+					var tp1 = JSON.parse(tp);
+					var nodes = tp1.nodes;
+					for(var i=0; i<nodes.length; i++){
+						if(nodes[i].id == nodeid){
+							nodes[i].width = parseInt($('#nodewidth').val());
+							nodes[i].text = $('#ccomment').val();
+						}
+					}
+					tp = JSON.stringify(tp1);
+				}
+				tp = tp.replace(new RegExp('},{','g'),'},\n{');
+				localStorage.setItem('zrconf1',tp); 
+				pzrender.init(zr);
+				pzrender.showCL( JSON.parse(tp),zr); 
+				zr.render();
+				toastr.success("提示","保存成功！");
+			});
+			//导出
+			$('#zc5').on('click',function(){
+				$("#myModal3").modal('show');
+				var tp = JSON.stringify(pzrender.getnowopt());
+				tp = tp.replace(new RegExp('},{','g'),'},\n{');
+				setTimeout(function(){$('#textarea1').val(tp); },100); 
+			});
+			//导入
+			$('#zf46').on('click',function(){
+				$("#myModal4").modal('hide');
+				var str = $('#textarea2').val();
+				str = str.replace(new RegExp('\n','g'),'');
+				pzrender.init(zr);
+				pzrender.showCL( JSON.parse(str),zr); 
+				zr.render();
+			});
+			//新建流程
+			$('#zf47').on('click',function(){
+				$("#myModal5").modal('hide');
+				pzrender.init(zr);
+				pzrender.showCL(optsnull, zr); 
+				zr.render();
+			});
+			//新建案例流程
+			$('#zf48').on('click',function(){
+				$("#myModal6").modal('hide');
+				pzrender.init(zr);
+				pzrender.showCL(optstp, zr); 
+				zr.render();
+			});
+			
+			//连线组件
+			$('#add1').on('click',function(){   //连线
+				pzrender.fucstate="addline";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			$('#add2').on('click',function(){   //箭头连线
+				pzrender.fucstate="addarrow";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			$('#add3').on('click',function(){   //虚线连线
+				pzrender.fucstate="addlineB";
+				toastr.info("提示","请选择 起始节点！");				
+			}); 
+			//工具组件
+			$('#add4').on('click',function(){   pzrender.addtext("备注",zr);  });  //备注
+			$('#add5').on('click',function(){   pzrender.addpoint(zr); 	});   //点
+			//流程组件
+			$('#add6').on('click',function(){  pzrender.addstart(zr);	});  //开始
+			$('#add7').on('click',function(){  pzrender.addend(zr); 	});  //结束
+			$('#add8').on('click',function(){  pzrender.addtask("任务",zr); 	});
+			$('#add9').on('click',function(){  pzrender.addsubtask("子任务",zr); 	});
+			$('#add10').on('click',function(){  pzrender.adddoc("文档",zr);	});
+			$('#add11').on('click',function(){  pzrender.addbranch("分支",zr);	});
+			$('#add12').on('click',function(){  pzrender.addtask("挂起",zr);	});
+			$('#add13').on('click',function(){  pzrender.addtask("异常",zr);	});			
+
+			optsnull={"nodes":[],"index":50};
+			optstp= {"nodes":[{"type":"pstart","x":203,"y":31,"id":"start","text":"开始"},
+				{"type":"pend","x":200,"y":470,"id":"end","text":"结束"},
+				{"type":"psubtask","x":152,"y":63,"text":"研发任务管理","width":100,"id":"st1","height":40},
+				{"type":"psubtask","x":150,"y":240,"text":"评审管理","width":100,"id":"st2","active":"1","height":40},
+				{"type":"psubtask","x":300,"y":310,"text":"试验管理","width":100,"id":"st3","height":40},
+				{"type":"psubtask","x":300,"y":380,"text":"材料包装\n设计管理","width":100,"id":"st4","height":40},
+				{"type":"pdoc","x":10,"y":112,"text":"新材料","width":60,"id":"d1","height":40},
+				{"type":"pdoc","x":10,"y":170,"text":"库存材料","width":60,"id":"d2","height":40},
+				{"type":"pdoc","x":40,"y":240,"text":"评审记录（报告）","width":100,"id":"d3","height":40},
+				{"type":"pdoc","x":410,"y":310,"text":"试验记录（报告）","width":100,"id":"d4","height":40},
+				{"type":"ptask","x":152,"y":114,"text":"01 材料选型","width":100,"id":"a1","height":40},
+				{"type":"ptask","x":150,"y":170,"text":"02 选型方案评价","width":100,"id":"a2","height":40},
+				{"type":"pbranch","x":150,"y":310,"text":"评审判定","width":100,"id":"c1","height":40},
+				{"type":"pbranch","x":140,"y":380,"text":"产品设计\n开发或维护","width":120,"id":"c2","height":40},
+				{"type":"ptask","x":10,"y":310,"text":"跳转01或结束","width":100,"id":"e1","height":40},
+				{"type":"ppoint","x":100,"y":132,"id":"p1"},
+				{"type":"ppoint","x":100,"y":190,"id":"p2"},
+				{"type":"ppoint","x":350,"y":260,"id":"p3"},
+				{"type":"ppoint","x":350,"y":470,"id":"p4"},
+				{"type":"pline","begin":"start","end":"st1"},
+				{"type":"pline","begin":"st1","end":"a1"},
+				{"type":"pline","begin":"a1","end":"a2"},
+				{"type":"pline","begin":"a2","end":"st2"},
+				{"type":"pline","begin":"st2","end":"c1"},
+				{"type":"parrow","begin":"c1","end":"c2","text":"通过","jiantou":"8","jiankuan":"5"},
+				{"type":"pline","begin":"p2","end":"p1"},
+				{"type":"parrow","begin":"p1","end":"a1"},
+				{"type":"pline","begin":"d1","end":"p1"},
+				{"type":"pline","begin":"d2","end":"p2"},
+				{"type":"pline","begin":"c1","end":"e1","text":"未\n通\n过"},
+				{"type":"parrow","begin":"c1","end":"st3","text":"上机\n实验","jiantou":"8","jiankuan":"5"},
+				{"type":"pline","begin":"st3","end":"p3"},
+				{"type":"pline","begin":"p3","end":"st2"},
+				{"type":"pline","begin":"c2","end":"st4","text":"是"},
+				{"type":"pline","begin":"c2","end":"end","text":"材料、技术\n研究"},
+				{"type":"pline","begin":"c2","end":"st4"},
+				{"type":"pline","begin":"st4","end":"p4"},
+				{"type":"parrow","begin":"p4","end":"end"}],"index":50} ;
+			
+			var opts = optstp;
+			if(localStorage.getItem('zrconf1')!=null){ 
+				opts = JSON.parse(localStorage.getItem('zrconf1') ); 
+			}
+			zr = zrender.init(document.getElementById('mainz1'));
+			//zr.clear();  
+			pzrender.init(zr);
+			//产品设计管理
+			pzrender.showCL(opts, zr); 
+			zr.render();
+     		
+		});	
+	});
+});    		
+ 		
+</script>
+</body>
+</html>

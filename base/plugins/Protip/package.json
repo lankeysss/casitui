@@ -1,0 +1,55 @@
+{
+  "name": "protip",
+  "version": "1.4.11",
+  "description": "A new generation jQuery Tooltip plugin.",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm run-script build-test",
+    "build-test": "browserify -t html2js-browserify test/test.js -o bundle.test.js && npm run-script sass",
+    "build-prod": "browserify -t html2js-browserify main.js -o bundle.js && npm run-script sass && node minify.js",
+    "build": "npm run build-prod",
+    "build-all": "npm run build-test && npm run build-prod",
+    "sass": "node-sass css/protip.scss css/protip.css",
+    "changelog": "github-changes -o DoclerLabs -r Protip -a"
+  },
+  "author": "Victor Vincent <wintercounter@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DoclerLabs/Protip"
+  },
+  "bugs": {
+    "url": "https://github.com/DoclerLabs/Protip/issues"
+  },
+  "keywords": [
+    "tooltip",
+    "jquery",
+    "plugin",
+    "observer",
+    "live",
+    "gravity",
+    "auto"
+  ],
+  "devDependencies": {
+    "async": "1.5.2",
+    "browserify": "13.0.0",
+    "chai": "3.5.0",
+    "html2js-browserify": "1.1.0",
+    "mocha": "2.4.5",
+    "sinon": "1.17.3",
+    "minifier": "0.7.1",
+    "browserify-shim": "3.8.12",
+    "node-sass": "3.4.2"
+  },
+  "dependencies": {
+    "jquery": "*"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  }
+}

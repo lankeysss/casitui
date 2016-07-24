@@ -1,0 +1,11 @@
+﻿st=>start: 开始:>http://www.baidu.com[blank]
+e=>end: 结束:>http://www.google.com
+op1=>operation: 一些任务
+sub1=>subroutine: 一些子任务
+cond=>condition: 是
+or 否?:>http://www.baidu.com
+io=>inputoutput: 一些事务
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->sub1(right)->op1

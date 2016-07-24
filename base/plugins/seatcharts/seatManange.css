@@ -1,0 +1,188 @@
+body {
+	font-family: 'Lato', sans-serif;
+}
+a {
+	color: #b71a4c;
+}
+.front-indicator {
+	width: 145px;
+	margin: 5px 32px 15px 32px;
+	background-color: #f6f6f6;	
+	color: #adadad;
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+}
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+.container {
+	/*
+	margin: 0 auto;
+	width: 1200px;
+	text-align: right;
+	*/
+}
+.booking-details {
+	float: left;
+	text-align: left;
+	margin-left: 35px;
+	font-size: 12px;
+	position: relative;
+	height: 401px;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	/*
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+	*/
+	height: 15px !important;
+	width: 15px !important;
+	line-height: 15px !important;
+	
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;	
+}
+div.seatCharts-row {
+	
+	/*height: 35px;*/
+	height: 25px;
+	
+}
+div.seatCharts-seat.available {
+//	background-color: #B9DEA0;
+
+}
+div.seatCharts-seat.available.first-class {
+/* 	background: url(vip.png); */
+	background-color: #3a78c3;
+}
+/*
+	����������ʽ
+*/
+div.seatCharts-seat.available.ateam-class {
+	background-color: #42EB08;
+}
+div.seatCharts-seat.available.bteam-class {
+	background-color: #52D7FF;
+}
+div.seatCharts-seat.available.cteam-class {
+	background-color: #E7B218;
+}
+div.seatCharts-seat.available.dteam-class {
+	background-color: #FF6DC6;
+}
+div.seatCharts-seat.available.eteam-class {
+	background-color: #CB4D22;
+}
+div.seatCharts-seat.available.fteam-class {
+	background-color: #998200;
+}
+div.seatCharts-seat.available.gteam-class {
+	background-color: #994D01;
+}
+div.seatCharts-seat.available.hteam-class {
+	background-color: #CC3E00;
+}
+div.seatCharts-seat.available.iteam-class {
+	background-color: #FE2619;
+}
+div.seatCharts-seat.available.jteam-class {
+	background-color: #D9008D;
+}
+div.seatCharts-seat.available.kteam-class {
+	background-color: #9900CC;
+}
+div.seatCharts-seat.available.lteam-class {
+	background-color: #ac99ff;
+}
+div.seatCharts-seat.available.mteam-class {
+	background-color: #833FFF;
+}
+div.seatCharts-seat.available.nteam-class {
+	background-color: #ff9933;
+}
+div.seatCharts-seat.available.oteam-class {
+	background-color: #77b200;
+}
+div.seatCharts-seat.available.pteam-class {
+	background-color: #e28699;
+}
+div.seatCharts-seat.available.qteam-class {
+	background-color: #71e3d9;
+}
+div.seatCharts-seat.available.rteam-class {
+	background-color: #FF620D;
+}
+div.seatCharts-seat.available.steam-class {
+	background-color: #9DA51F;
+}
+div.seatCharts-seat.available.tteam-class {
+	background-color: #4c88ff;
+}
+div.seatCharts-seat.available.uteam-class {
+	background-color: #00B4D9;
+}
+div.seatCharts-seat.available.vteam-class {
+	background-color: #00B872;
+}
+div.seatCharts-seat.available.wteam-class {
+	background-color: #974478;
+}
+
+div.seatCharts-seat.focused {
+	background-color: #76B474;
+}
+div.seatCharts-seat.selected {
+	//background-color: #E6CAC4;
+}
+div.seatCharts-seat.unavailable {
+	background-color: #472B34;
+}
+div.seatCharts-container {
+	//padding-left: 110px;
+	//border: 1px dotted #adadad;
+	/*width: 2100px;*/
+	width: 1400px;
+	padding-top: 10px;
+	margin-top:10px;
+	//float: right;
+}
+div.seatCharts-legend {
+	padding-left: 0px;
+	//position: fixed;
+	bottom: 16px;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 10px;
+	font-size:1px;
+	vertical-align: text-top;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 90px;
+	overflow-y: scroll;
+	overflow-x: none;
+	width: 170px;
+}

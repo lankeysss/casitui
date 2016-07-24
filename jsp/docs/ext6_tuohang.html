@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title></title>    
+    <link rel="stylesheet" type="text/css" href="../../base/plugins/ext6/classic/theme-triton/resources/theme-triton-all-debug.css" /> 
+    <script src="../../base/plugins/ext6/ext-all.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+   .x-panel-header-title-default {
+		color: #8B8B8B !important;
+	} 
+  .x-panel-header-default {
+		background-image: none;
+		background-color: #FAFAFA !important;
+	}
+	.x-panel-header-default .x-tool-img {
+background-color:  #FAFAFA;
+}
+.x-tool-img {
+	color:#5fa2dd;
+}
+	
+    	</style>
+    <script type="text/javascript">
+    /* 
+   	
+   				浅蓝色	 	<link rel="stylesheet" type="text/css" href="classic/theme-triton/resources/theme-triton-all.css" /> 
+ 					黑色 		<link rel="stylesheet" type="text/css" href="classic/theme-aria/resources/theme-aria-all.css" /> 
+          经典主题             <link rel="stylesheet" type="text/css" href="classic/theme-classic/resources/theme-classic-all.css" /> 
+          灰色主题             <link rel="stylesheet" type="text/css" href="classic/theme-crisp/resources/theme-crisp-all.css" />  
+          灰色(原版)   <link rel="stylesheet" type="text/css" href="classic/theme-gray/resources/theme-gray-all.css" />  
+        
+    */ 
+    
+    //预加载
+  // Ext.Loader.setPath({
+   //         Ext: '../../base/plugins/ext6/Ext' 
+  //     });
+    Ext.require([ 
+    ]);    
+    
+    Ext.onReady(function() {
+    	
+    	
+
+    Ext.define('KitchenSink.model.Base', {
+    extend: 'Ext.data.Model',
+    schema: {
+        namespace: 'KitchenSink.model'
+    }
+});
+ 
+    
+  Ext.define('KitchenSink.model.dd.Simple', {
+    extend: 'KitchenSink.model.Base',
+    fields: ['name', 'column1', 'column2']    
+});  
+    
+    Ext.define('KitchenSink.view.dd.GridToGrid', {
+    extend: 'Ext.container.Container',
+    
+    requires: [
+        'Ext.grid.*',
+        'Ext.layout.container.HBox',
+        'KitchenSink.model.dd.Simple'
+    ],    
+    xtype: 'dd-grid-to-grid',
+    
+    
+    width: 650,
+    height: 300,
+    layout: {
+        type: 'hbox',
+        align: 'stretch',
+        padding: 5
+    },
+    
+    myData: [
+        { name : 'Rec 0', column1 : '0', column2 : '0' },
+        { name : 'Rec 1', column1 : '1', column2 : '1' },
+        { name : 'Rec 2', column1 : '2', column2 : '2' },
+        { name : 'Rec 3', column1 : '3', column2 : '3' },
+        { name : 'Rec 4', column1 : '4', column2 : '4' },
+        { name : 'Rec 5', column1 : '5', column2 : '5' },
+        { name : 'Rec 6', column1 : '6', column2 : '6' },
+        { name : 'Rec 7', column1 : '7', column2 : '7' },
+        { name : 'Rec 8', column1 : '8', column2 : '8' },
+        { name : 'Rec 9', column1 : '9', column2 : '9' }
+    ],
+    
+    initComponent: function(){
+        var group1 = this.id + 'group1',
+            group2 = this.id + 'group2',
+            columns = [{
+                text: '名称', 
+                flex: 1, 
+                sortable: true, 
+                dataIndex: 'name'
+            }, {
+                text: '分类', 
+                width: 80, 
+                sortable: true, 
+                dataIndex: 'column1'
+            }, {
+                text: '价值', 
+                width: 80, 
+                sortable: true, 
+                dataIndex: 'column2'
+            }];
+            
+        this.items = [{
+            itemId: 'grid1',
+            flex: 1,
+            xtype: 'grid',
+            multiSelect: true,
+                viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop',
+                    containerScroll: true,
+                    dragGroup: group1,
+                    dropGroup: group2
+                },
+                listeners: {
+                    drop: function(node, data, dropRec, dropPosition) {
+                        var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                        // Ext.example.msg('Drag from right to left', 'Dropped ' + data.records[0].get('name') + dropOn);
+                    }
+                }
+            },
+            store: new Ext.data.Store({
+                model: KitchenSink.model.dd.Simple,
+                data: this.myData
+            }),
+            columns: columns,
+            title: '表格1',
+            tools: [{
+                type: 'refresh',
+                tooltip: 'Reset both grids',
+                scope: this,
+                handler: this.onResetClick
+            }],
+            margin: '0 5 0 0'
+        }, {
+            itemId: 'grid2',
+            flex: 1,
+            xtype: 'grid',
+            viewConfig: {
+                plugins: {
+                    ptype: 'gridviewdragdrop',
+                    containerScroll: true,
+                    dragGroup: group2,
+                    dropGroup: group1
+                },
+                listeners: {
+                    drop: function(node, data, dropRec, dropPosition) {
+                        var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+                       // Ext.example.msg('Drag from left to right', 'Dropped ' + data.records[0].get('name') + dropOn);
+                    }
+                }
+            },
+            store: new Ext.data.Store({
+                model: KitchenSink.model.dd.Simple
+            }),
+            columns: columns,
+            stripeRows: true,
+            title: '表格2'
+        }];
+
+        this.callParent();
+    },
+    
+    onResetClick: function(){
+        //refresh source grid
+        this.down('#grid1').getStore().loadData(this.myData);
+
+        //purge destination grid
+        this.down('#grid2').getStore().removeAll();
+    }
+});
+    	 
+    	//创建gridpanel    	
+    	//var mod= Ext.create('KitchenSink.model.Company', { });	 KitchenSink.store.Companies
+    //	var da= Ext.create('KitchenSink.data.DataSets', { });	 
+    	var grid = Ext.create('KitchenSink.view.dd.GridToGrid', { });	
+    	
+    	//全屏显示，视图
+    	
+    	 
+    	Ext.create('Ext.container.Viewport', {
+    		layout:'fit',
+    		items:[grid]
+    	});    
+    	
+    });       
+    </script> 
+</head>
+<body></body>
+</html>

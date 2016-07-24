@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <title></title>    
+    <link rel="stylesheet" type="text/css" href="../../base/plugins/ext6/classic/theme-triton/resources/theme-triton-all-debug.css" /> 
+    <script src="../../base/plugins/ext6/ext-all.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+   .x-panel-header-title-default {
+		color: #8B8B8B !important;
+	} 
+  .x-panel-header-default {
+		background-image: none;
+		background-color: #FAFAFA !important;
+	}
+	.x-tree-icon-parent-expanded:before {
+	content: "\f115";
+	}
+	.x-tree-icon-parent:before {
+content: "\f114";
+}
+.x-tree-icon-leaf:before {
+content: "\f016";
+}
+    	</style>
+    <script type="text/javascript">
+    /* 
+   	
+   				浅蓝色	 	<link rel="stylesheet" type="text/css" href="classic/theme-triton/resources/theme-triton-all.css" /> 
+ 					黑色 		<link rel="stylesheet" type="text/css" href="classic/theme-aria/resources/theme-aria-all.css" /> 
+          经典主题             <link rel="stylesheet" type="text/css" href="classic/theme-classic/resources/theme-classic-all.css" /> 
+          灰色主题             <link rel="stylesheet" type="text/css" href="classic/theme-crisp/resources/theme-crisp-all.css" />  
+          灰色(原版)   <link rel="stylesheet" type="text/css" href="classic/theme-gray/resources/theme-gray-all.css" />  
+        
+    */ 
+    
+    //预加载
+  // Ext.Loader.setPath({
+  //          KitchenSink: '../../base/plugins/ext6/KitchenSink' 
+  //     });
+    Ext.require([ 
+    ]);    
+    
+    Ext.onReady(function() {
+    	
+    	
+    	Ext.define('KitchenSink.model.Base', {
+    extend: 'Ext.data.Model',
+    schema: {
+        namespace: 'KitchenSink.model'
+    }
+});
+
+
+    	Ext.define('KitchenSink.model.tree.Base', {
+    extend: 'Ext.data.TreeModel',
+    requires: [
+        'KitchenSink.model.Base'
+    ]
+});
+    	
+    	Ext.define('KitchenSink.model.Company', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name'},
+        {name: 'price', type: 'float'},
+        {name: 'change', type: 'float'},
+        {name: 'pctChange', type: 'float'},
+        {name: 'lastChange', type: 'date',  dateFormat: 'n/j h:ia'},
+        {name: 'industry'},
+        {name: 'desc'},
+        // Trend begins with the cerrent price. Changes get pushed onto the end
+        {
+            name: 'trend',
+            convert: function(value, record) {
+                // Record creation call with no trend there: start with current price
+                if (value === null) {
+                    return [record.get('price')];
+                }
+                return Ext.isArray(value) ? value : [ value ];
+            } 
+        },
+        // Rating dependent upon performance 0 = best, 2 = worst
+        {
+            name: 'rating',
+            type: 'int',
+            convert: function(value, record) {
+                var pct = record.get('pctChange');
+                if (pct < 0)
+                    return 2;
+                if (pct < 1)
+                    return 1;
+                return 0;
+            }
+        }
+    ],
+
+    // Override to keep the last 10 prices in the trend field
+    set: function(fieldName, value) {
+        if (fieldName === 'price') {
+            this.callParent([{
+                price: value,
+                trend: this.addToTrend(fieldName.price)
+            }]);
+        }
+        else {
+            if (typeof fieldName !== 'string' && 'price' in fieldName) {
+                fieldName.trend = this.addToTrend(fieldName.price);
+            }
+            this.callParent(arguments);
+        }
+    },
+
+    // Override to keep the last 10 prices in the trend field
+    addToTrend: function(value) {
+        var trend = this.data.trend.concat(value);
+
+        if (trend.length > 10) {
+            Ext.Array.splice(trend, 0, trend.length - 10);
+        }
+        return trend;
+    }
+});
+
+
+    	
+ Ext.define('KitchenSink.model.tree.Task', {
+    extend: 'KitchenSink.model.tree.Base',
+    fields: [{
+        name: 'task',
+        type: 'string'
+    }, {
+        name: 'user',
+        type: 'string'
+    }, {
+        name: 'duration',
+        type: 'float'
+    }, {
+        name: 'done',
+        type: 'boolean'
+    }]
+}); 
+Ext.define('KitchenSink.model.tree.Base', {
+    extend: 'Ext.data.TreeModel' 
+}); 
+
+ Ext.define('KitchenSink.view.tree.TreeGrid', {
+    extend: 'Ext.tree.Panel',
+    
+    requires: [
+        'Ext.data.*',
+        'Ext.grid.*',
+        'Ext.tree.*',
+        'Ext.ux.CheckColumn',
+        'KitchenSink.model.tree.Task'
+    ],    
+    xtype: 'tree-grid',
+    
+    reserveScrollbar: true,
+    
+    title: '表格树',
+    height: 370,
+    useArrows: true,
+    rootVisible: false,
+    multiSelect: true,
+    singleExpand: true,
+    
+    initComponent: function() {
+        this.width = 600;
+        
+        Ext.apply(this, {
+            store: new Ext.data.TreeStore({
+                model: KitchenSink.model.tree.Task,
+                proxy: {
+                    type: 'ajax',
+                    url: 'ext6_treegrid.json'
+                },
+                folderSort: true
+            }),
+            columns: [{
+                xtype: 'treecolumn', //this is so we know which column will show the tree
+                text: '任务',
+                flex: 2,
+                sortable: true,
+                dataIndex: 'task'
+            },{
+                //we must use the templateheader component so we can use a custom tpl
+                xtype: 'templatecolumn',
+                text: '目标',
+                flex: 1,
+                sortable: true,
+                dataIndex: 'duration',
+                align: 'center',
+                //add in the custom tpl for the rows
+                tpl: Ext.create('Ext.XTemplate', '{duration:this.formatHours}', {
+                    formatHours: function(v) {
+                        if (v < 1) {
+                            return Math.round(v * 60) + ' mins';
+                        } else if (Math.floor(v) !== v) {
+                            var min = v - Math.floor(v);
+                            return Math.floor(v) + 'h ' + Math.round(min * 60) + 'm';
+                        } else {
+                            return v + ' hour' + (v === 1 ? '' : 's');
+                        }
+                    }
+                })
+            },{
+                text: '归属',
+                flex: 1,
+                dataIndex: 'user',
+                sortable: true
+            }, {
+                xtype: 'checkcolumn',
+                header: '选择',
+                dataIndex: 'done',
+                width: 55,
+                stopSelection: false,
+                menuDisabled: true
+            }, {
+                text: '编辑',
+                width: 55,
+                menuDisabled: true,
+                xtype: 'actioncolumn',
+                tooltip: 'Edit task',
+                align: 'center',
+                iconCls: 'tree-grid-edit-task',
+                handler: function(grid, rowIndex, colIndex, actionItem, event, record, row) {
+                    //Ext.Msg.alert('Editing' + (record.get('done') ? ' completed task' : '') , record.get('task'));
+                },
+                // Only leaf level tasks may be edited
+                isDisabled: function(view, rowIdx, colIdx, item, record) {
+                    return !record.data.leaf;
+                }
+            }]
+        });
+        this.callParent();
+    }
+});
+    	 
+    	 
+    	//创建gridpanel    	
+    	//var mod= Ext.create('KitchenSink.model.Company', { });	 KitchenSink.store.Companies
+    	//var da= Ext.create('KitchenSink.store.Companies', { });	 
+    	var grid = Ext.create('KitchenSink.view.tree.TreeGrid', {});	
+    	
+    	//全屏显示，视图
+    	
+    	 
+    	Ext.create('Ext.container.Viewport', {
+    		layout:'fit',
+    		items:[grid]
+    	});    
+    	
+    });       
+    </script> 
+</head>
+<body></body>
+</html>
