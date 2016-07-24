@@ -2,7 +2,7 @@
 
 CASITUI 介绍
 
-____“CASIT_UI”桌面UI框架可用于快速开发应用于桌面端的应用软件。CASIT_UI框架采用HTML5技术开发，框架内引用了Jquery、Bootstrap、Extjs等第三方开源框架。可用于基于Json数据交换格式的Http服务或者Ajax应用、可以用于Web开发或Html5移动应用。“CASIT_UI”框架目前包括10大类、98种UI组件，10类分别是：主页、表单、表格、树形结构、高级UI组件、相册、统计图表、UI元素、页面、工具。
+   “CASIT_UI”桌面UI框架可用于快速开发应用于桌面端的应用软件。CASIT_UI框架采用HTML5技术开发，框架内引用了Jquery、Bootstrap、Extjs等第三方开源框架。可用于基于Json数据交换格式的Http服务或者Ajax应用、可以用于Web开发或Html5移动应用。“CASIT_UI”框架目前包括10大类、98种UI组件，10类分别是：主页、表单、表格、树形结构、高级UI组件、相册、统计图表、UI元素、页面、工具。
 
 ____目前框架有两个演示地址：一是CasitUI框架所有组件演示地址；二是以CasitUI框架技术，参照GJJ项目的系统管理部分Web页面和功能，后台采用CASIT_DB3 Java服务框架完成的后台管理系统。
 
